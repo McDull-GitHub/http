@@ -31,4 +31,4 @@ jobs:
       run: curl "https://api.telegram.org/bot${{ secrets.TOKEN }}/sendDocument?chat_id=${{ secrets.CHAT_ID }}" -F "document=@socks2http_armv7" >/dev/null
     
     - name: Upload arm64
-      run: curl "https://api.telegram.org/bot${{ secrets.TOKEN }}/sendDocument?chat_id=${{ secrets.CHAT_ID }}" -F "document=@socks2http_armv7" >/dev/null
+      run: curl "https://api.telegram.org/bot${{ secrets.TOKEN }}/sendDocument?chat_id=${{ secrets.CHAT_ID }}" -F "document=@socks2http_arm64" >/dev/null
