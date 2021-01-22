@@ -1,0 +1,31 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+
+    - name: Build armv7
+      run: GOOS=linux GOARCH=arm64 go build -ldflags="-w -s" -o socks2http_armv7 main.go
+
+    - name: Build arm64
+      run: GOOS=linux GOARCH=arm GOARM=7 go build -ldflags="-w -s" -o socks2http_arm64 main.go
+    
+    - name: Upload armv7
+      run: curl "https://api.telegram.org/bot${{ secrets.TOKEN }}/sendDocument?chat_id=${{ secrets.CHAT_ID }}" -F "document=@socks2http_armv7" >/dev/null
+    
+    - name: Upload arm64
+      run: curl "https://api.telegram.org/bot${{ secrets.TOKEN }}/sendDocument?chat_id=${{ secrets.CHAT_ID }}" -F "document=@socks2http_armv7" >/dev/null
